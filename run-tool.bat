@@ -10,7 +10,7 @@ echo ===========================
 set /p choice="Nhap lua chon (1-1): "
 
 :: Tùy chọn URL tương ứng
-if "%choice%"=="1" set ps1url=1Zeref/setup-laptop/get-informations.ps1
+if "%choice%"=="1" set https://raw.githubusercontent.com/1Zeref/setup-laptop/refs/heads/main/get-informations.ps1
 
 :: Kiểm tra quyền Admin
 NET SESSION >nul 2>&1
@@ -21,7 +21,7 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 :: Tải và chạy script từ URL
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubusercontent.com/%ps1url%' | powershell -NoProfile -ExecutionPolicy Bypass -"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm '%ps1url%' | powershell -NoProfile -ExecutionPolicy Bypass -"
 
 :: Dừng để xem kết quả
 pause
