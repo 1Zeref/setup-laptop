@@ -14,7 +14,7 @@ if %errorlevel% neq 0 (
 setlocal EnableDelayedExpansion
 
 :: List of 3 PowerShell scripts with customized display names
-set "SCRIPTS[1]=https://raw.githubusercontent.com/1Zeref/setup-laptop/refs/heads/main/get-informations.ps1"
+set "SCRIPTS[1]=https://raw.githubusercontent.com/1Zeref/setup-laptop/main/get-informations.ps1"
 set "NAMES[1]=Get System Information"
 :: Display menu with custom names
 echo Available scripts:
