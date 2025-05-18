@@ -28,3 +28,4 @@ w32tm /resync
 
 # Đặt Region thành Việt Nam
 Set-WinSystemLocale vi-VN
+
