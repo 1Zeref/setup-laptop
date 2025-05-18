@@ -54,8 +54,6 @@ if "!choice!"=="3" (
 )
 
 echo Invalid choice: "!choice!". Please select a valid option.
-echo Returning to menu in 2 seconds...
-timeout /t 2 /nobreak >nul
 goto :MENU
 
 :RUNSCRIPT_1
@@ -72,8 +70,6 @@ goto :EXECUTESCRIPT
 cls
 if "!SCRIPT_URL!"=="" (
     echo Error: Script definition not found.
-    echo Returning to menu in 2 seconds...
-    timeout /t 2 /nobreak >nul
     goto :MENU
 )
 
@@ -90,7 +86,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "irm '!SCRIPT_URL!' | iex
 echo.
 echo =====================================
 echo Script "!SCRIPT_NAME!" finished.
-echo =====================================
 goto :MENU
 
 endlocal
