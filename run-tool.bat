@@ -90,9 +90,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "irm '!SCRIPT_URL!' | iex
 echo.
 echo =====================================
 echo Script "!SCRIPT_NAME!" finished.
-echo Returning to menu in 2 seconds...
 echo =====================================
-timeout /t 2 /nobreak >nul
 goto :MENU
 
 endlocal
