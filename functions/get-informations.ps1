@@ -7,6 +7,7 @@ $bios = Get-WmiObject -Class Win32_BIOS
 Write-Host "Serial Number: $($bios.SerialNumber)"
 
 $ReportPath = "$env:USERPROFILE\battery-report.html"
+Write-Host "$ReportPath"
 powercfg /batteryreport /output $ReportPath
 if (Test-Path $ReportPath) {
     Start-Process $ReportPath
