@@ -18,6 +18,10 @@ set "SCRIPTS[1]=https://raw.githubusercontent.com/1Zeref/setup-laptop/main/funct
 set "NAMES[1]=Get System Information"
 set "SCRIPTS[2]=https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/config.ps1"
 set "NAMES[2]=Configure Windows"
+set "SCRIPTS[3]=https://christitus.com/win"
+set "NAMES[3]=Chris Titus Tech's Windows Utility"
+set "SCRIPTS[4]=https://get.activated.win"
+set "NAMES[4]=Microsoft-Activation-Scripts"
 
 :MENU
 cls
@@ -28,28 +32,30 @@ echo.
 echo Available scripts:
 echo 1. !NAMES[1]!
 echo 2. !NAMES[2]!
-echo 3. Exit
+echo 3. !NAMES[3]!
+echo 4. !NAMES[4]!
+echo 5. Exit
 echo.
 echo (Press ENTER without typing to exit)
 echo -------------------------------------
 
 :: Nhận lựa chọn của người dùng
 set "choice="
-set /p choice="Select a script to run (1-3) or leave blank to Exit: "
+set /p choice="Select a script to run (1-5) or leave blank to Exit: "
 
 :: Kiểm tra nếu nhập rỗng (chỉ nhấn Enter)
 if "!choice!"=="" (
     echo No selection made. Exiting script...
-    timeout /t 1 /nobreak >nul
     exit /b
 )
 
 :: Xử lý lựa chọn của người dùng
 if "!choice!"=="1" goto :RUNSCRIPT_1
 if "!choice!"=="2" goto :RUNSCRIPT_2
-if "!choice!"=="3" (
+if "!choice!"=="3" goto :RUNSCRIPT_3
+if "!choice!"=="4" goto :RUNSCRIPT_4
+if "!choice!"=="5" (
     echo Exiting script as per selection...
-    timeout /t 1 /nobreak >nul
     exit /b
 )
 
@@ -64,6 +70,16 @@ goto :EXECUTESCRIPT
 :RUNSCRIPT_2
 set "SCRIPT_URL=!SCRIPTS[2]!"
 set "SCRIPT_NAME=!NAMES[2]!"
+goto :EXECUTESCRIPT
+
+:RUNSCRIPT_3
+set "SCRIPT_URL=!SCRIPTS[3]!"
+set "SCRIPT_NAME=!NAMES[3]!"
+goto :EXECUTESCRIPT
+
+:RUNSCRIPT_4
+set "SCRIPT_URL=!SCRIPTS[4]!"
+set "SCRIPT_NAME=!NAMES[4]!"
 goto :EXECUTESCRIPT
 
 :EXECUTESCRIPT
