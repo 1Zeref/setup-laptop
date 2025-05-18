@@ -27,5 +27,7 @@ w32tm /config /manualpeerlist:"time.windows.com" /syncfromflags:manual /reliable
 w32tm /resync
 
 # Đặt Region thành Việt Nam
-Set-WinSystemLocale vi-VN
+Get-WinHomeLocation
+Set-WinHomeLocation -GeoID 248
+Get-WinHomeLocation
 
