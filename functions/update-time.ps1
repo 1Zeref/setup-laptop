@@ -13,6 +13,6 @@ Write-Host "[+] Đã đặt múi giờ về UTC+7 (Bangkok, Hanoi, Jakarta)"
 Write-Host "[+] Đang đồng bộ thời gian với máy chủ thời gian..."
 w32tm /resync | Out-Null
 
-# Hiển thị ngày hiện tại theo định dạng dd/MM/yyyy
-$now = Get-Date
-Write-Host "`nNgày hiện tại: $($now.ToString('dd/MM/yyyy'))"
+# Đặt định dạng ngày ngắn (Short Date) thành dd/MM/yyyy
+Set-ItemProperty -Path "HKCU:\Control Panel\International" -Name "sShortDate" -Value "dd/MM/yyyy"
+Write-Host "Đã cập nhật định dạng ngày ngắn (Short Date) thành dd/MM/yyyy"
