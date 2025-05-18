@@ -8,6 +8,8 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 # Danh sách các link raw GitHub chứa các script .ps1
 $ps1Links = @(
     "https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/update-time.ps1"
+    "https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/power-and-sleep.ps1"
+    "https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/desktop.ps1"
     # <-- Thêm link khác tại đây nếu có
 )
 
