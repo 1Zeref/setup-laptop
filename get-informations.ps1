@@ -1,6 +1,4 @@
-Write-Host "=============================="
-Write-Host "Thông tin máy tính"
-Write-Host "=============================="
+Write-Host "=== CHỌN SCRIPT ==="
 # Lấy thông tin BIOS để lấy Serial Number
 $bios = Get-WmiObject -Class Win32_BIOS
 
