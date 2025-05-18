@@ -1,27 +1,44 @@
 @echo off
-title Chạy Script PS1 từ URL
-color 0A
 
-:: Menu chọn
-echo ===========================
-echo Chon script ban muon chay:
-echo 1. Lấy Serial
-echo ===========================
-set /p choice="Nhap lua chon (1-1): "
+::----------------------------------------------------------------------
+:: Phần kiểm tra và yêu cầu quyền Administrator
+::----------------------------------------------------------------------
+openfiles >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Requesting administrative privileges...
+    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+    exit /b
+)
+::----------------------------------------------------------------------
 
-:: Gán URL tương ứng
-if "%choice%"=="1" set "ps1url=https://raw.githubusercontent.com/1Zeref/setup-laptop/refs/heads/main/get-informations.ps1"
+setlocal EnableDelayedExpansion
 
-:: Kiểm tra quyền Admin
-NET SESSION >nul 2>&1
-IF %ERRORLEVEL% NEQ 0 (
-    echo Dang yeu cau quyen Administrator...
-    powershell -Command "Start-Process '%~f0' -Verb runAs"
+:: List of 3 PowerShell scripts with customized display names
+set "SCRIPTS[1]=https://raw.githubusercontent.com/1Zeref/setup-laptop/refs/heads/main/get-informations.ps1"
+set "NAMES[1]=Get System Information"
+:: Display menu with custom names
+echo Available scripts:
+echo 1. !NAMES[1]!
+
+:: Get user selection
+set /p choice="Select a script to run (1-1): "
+
+:: Validate input choice
+if "!SCRIPTS[%choice%]!"=="" (
+    echo Invalid choice! Exiting...
+    timeout /t 2 /nobreak > nul
     exit /b
 )
 
-:: Tải và chạy script từ URL bằng PowerShell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm '%ps1url%' | iex"
+:: Select the script file
+set "SCRIPT=!SCRIPTS[%choice%]!"
 
-:: Dừng để xem kết quả
-pause
+:: Run the selected PowerShell script with admin privileges
+:: Đoạn mã gốc của bạn đã chạy PowerShell với quyền admin thông qua việc tải và thực thi,
+:: nhưng việc đảm bảo bản thân batch script chạy với quyền admin từ đầu là một lớp bảo vệ tốt hơn.
+:: Lệnh PowerShell bên dưới để thực thi script vẫn giữ nguyên vì nó hiệu quả.
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+ "irm '!SCRIPT!' | iex"
+
+:: Automatically close the batch file after execution
+exit
