@@ -1,7 +1,7 @@
 @echo off
 
 ::----------------------------------------------------------------------
-:: Phần kiểm tra và yêu cầu quyền Administrator
+:: Kiểm tra và yêu cầu quyền Administrator
 ::----------------------------------------------------------------------
 openfiles >nul 2>&1
 if %errorlevel% neq 0 (
@@ -13,7 +13,7 @@ if %errorlevel% neq 0 (
 
 setlocal EnableDelayedExpansion
 
-:: List of PowerShell scripts with customized display names
+:: Các script PowerShell cùng tên hiển thị
 set "SCRIPTS[1]=https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/get-informations.ps1"
 set "NAMES[1]=Get System Information"
 set "SCRIPTS[2]=https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/config.ps1"
@@ -26,54 +26,76 @@ echo      SCRIPT SELECTION MENU
 echo =====================================
 echo.
 echo Available scripts:
-echo 1. !NAMES[1]!
-echo 2. !NAMES[2]!
+if not "!NAMES[1]!"=="" echo 1. !NAMES[1]!
+if not "!NAMES[2]!"=="" echo 2. !NAMES[2]!
 echo 3. Exit
 echo.
 echo (Press ENTER without typing to exit)
 echo -------------------------------------
 
-:: Get user selection
-set "choice=" :: Đảm bảo biến choice rỗng trước khi nhận input mới
+:: Nhận lựa chọn của người dùng
+set "choice="
 set /p choice="Select a script to run (1-3), or leave blank to Exit: "
 
-:: Kiểm tra nếu người dùng không nhập gì (chỉ nhấn Enter)
+:: Kiểm tra nếu nhập rỗng
 if "!choice!"=="" (
     echo No selection made. Exiting script...
-    timeout /t 1 /nobreak > nul
+    timeout /t 1 /nobreak >nul
     exit /b
 )
 
-:: Validate input choice and process selection
-if "!choice!"=="1" goto :RUNSCRIPT_1
-if "!choice!"=="2" goto :RUNSCRIPT_2
+:: Kiểm tra lựa chọn hợp lệ và nó có tồn tại trong menu hay không
+if "!choice!"=="1" (
+    if "!NAMES[1]!"=="" (
+        echo Invalid selection! Option 1 is no longer available.
+        timeout /t 2 /nobreak >nul
+        goto :MENU
+    ) else (
+        goto :RUNSCRIPT_1
+    )
+)
+if "!choice!"=="2" (
+    if "!NAMES[2]!"=="" (
+        echo Invalid selection! Option 2 is no longer available.
+        timeout /t 2 /nobreak >nul
+        goto :MENU
+    ) else (
+        goto :RUNSCRIPT_2
+    )
+)
 if "!choice!"=="3" (
     echo Exiting script as per selection...
-    timeout /t 1 /nobreak > nul
+    timeout /t 1 /nobreak >nul
     exit /b
 )
 
 echo Invalid choice: "!choice!". Please select a valid option.
 echo Returning to menu in 2 seconds...
-timeout /t 2 /nobreak > nul
+timeout /t 2 /nobreak >nul
 goto :MENU
 
 :RUNSCRIPT_1
 set "SCRIPT_URL=!SCRIPTS[1]!"
 set "SCRIPT_NAME=!NAMES[1]!"
+:: Loại bỏ lựa chọn đã chạy khỏi menu
+set "NAMES[1]="
+set "SCRIPTS[1]="
 goto :EXECUTESCRIPT
 
 :RUNSCRIPT_2
 set "SCRIPT_URL=!SCRIPTS[2]!"
 set "SCRIPT_NAME=!NAMES[2]!"
+:: Loại bỏ lựa chọn đã chạy khỏi menu
+set "NAMES[2]="
+set "SCRIPTS[2]="
 goto :EXECUTESCRIPT
 
 :EXECUTESCRIPT
-cls :: Làm sạch màn hình trước khi hiển thị thông tin script sắp chạy
+cls
 if "!SCRIPT_URL!"=="" (
     echo Error: Script definition not found.
     echo Returning to menu in 2 seconds...
-    timeout /t 2 /nobreak > nul
+    timeout /t 2 /nobreak >nul
     goto :MENU
 )
 
@@ -84,16 +106,15 @@ echo From URL: !SCRIPT_URL!
 echo =====================================
 echo.
 
-:: Run the selected PowerShell script with admin privileges
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
- "irm '!SCRIPT_URL!' | iex"
+:: Chạy script PowerShell với quyền admin
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm '!SCRIPT_URL!' | iex"
 
 echo.
 echo =====================================
 echo Script "!SCRIPT_NAME!" finished.
 echo Returning to menu in 2 seconds...
 echo =====================================
-timeout /t 2 /nobreak > nul
+timeout /t 2 /nobreak >nul
 goto :MENU
 
 endlocal
