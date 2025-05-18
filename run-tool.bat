@@ -30,21 +30,30 @@ echo 1. !NAMES[1]!
 echo 2. !NAMES[2]!
 echo 3. Exit
 echo.
+echo (Press ENTER without typing to exit)
 echo -------------------------------------
 
 :: Get user selection
-set /p choice="Select a script to run (1-3), or 3 to Exit: "
+set "choice=" :: Đảm bảo biến choice rỗng trước khi nhận input mới
+set /p choice="Select a script to run (1-3), or leave blank to Exit: "
+
+:: Kiểm tra nếu người dùng không nhập gì (chỉ nhấn Enter)
+if "!choice!"=="" (
+    echo No selection made. Exiting script...
+    timeout /t 1 /nobreak > nul
+    exit /b
+)
 
 :: Validate input choice and process selection
 if "!choice!"=="1" goto :RUNSCRIPT_1
 if "!choice!"=="2" goto :RUNSCRIPT_2
 if "!choice!"=="3" (
-    echo Exiting script...
+    echo Exiting script as per selection...
     timeout /t 1 /nobreak > nul
     exit /b
 )
 
-echo Invalid choice! Please select a valid option.
+echo Invalid choice: "!choice!". Please select a valid option.
 echo Returning to menu in 2 seconds...
 timeout /t 2 /nobreak > nul
 goto :MENU
@@ -81,7 +90,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
 echo.
 echo =====================================
 echo Script "!SCRIPT_NAME!" finished.
-echo Returning to menu...
+echo Returning to menu in 2 seconds...
 echo =====================================
 timeout /t 2 /nobreak > nul
 goto :MENU
