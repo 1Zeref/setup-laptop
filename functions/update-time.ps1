@@ -7,15 +7,12 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 # Đặt múi giờ về UTC+7 (Bangkok, Hanoi, Jakarta)
 tzutil /s "SE Asia Standard Time"
-Write-Host "[✓] Đã đặt múi giờ về UTC+7 (Bangkok, Hanoi, Jakarta)"
+Write-Host "[+] Đã đặt múi giờ về UTC+7 (Bangkok, Hanoi, Jakarta)"
 
 # Cập nhật thời gian từ máy chủ Internet
-Write-Host "[✓] Đang đồng bộ thời gian với máy chủ thời gian..."
+Write-Host "[+] Đang đồng bộ thời gian với máy chủ thời gian..."
 w32tm /resync | Out-Null
 
 # Hiển thị ngày hiện tại theo định dạng dd/MM/yyyy
 $now = Get-Date
 Write-Host "`nNgày hiện tại: $($now.ToString('dd/MM/yyyy'))"
-
-# Kết thúc
-Read-Host "`nNhấn Enter để thoát"
