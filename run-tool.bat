@@ -73,23 +73,7 @@ echo Invalid choice: "!choice!". Please select a valid option.
 echo Returning to menu in 2 seconds...
 timeout /t 2 /nobreak >nul
 goto :MENU
-
-:RUNSCRIPT_1
-set "SCRIPT_URL=!SCRIPTS[1]!"
-set "SCRIPT_NAME=!NAMES[1]!"
-:: Loại bỏ lựa chọn đã chạy khỏi menu
-set "NAMES[1]="
-set "SCRIPTS[1]="
-goto :EXECUTESCRIPT
-
-:RUNSCRIPT_2
-set "SCRIPT_URL=!SCRIPTS[2]!"
-set "SCRIPT_NAME=!NAMES[2]!"
-:: Loại bỏ lựa chọn đã chạy khỏi menu
-set "NAMES[2]="
-set "SCRIPTS[2]="
-goto :EXECUTESCRIPT
-
+::----------------------------------------------------------------------
 :EXECUTESCRIPT
 cls
 if "!SCRIPT_URL!"=="" (
