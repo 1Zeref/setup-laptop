@@ -69,7 +69,7 @@ set "SCRIPT_NAME=!NAMES[2]!"
 goto :EXECUTESCRIPT
 
 :EXECUTESCRIPT
-cls :: <--- LÀM SẠCH MÀN HÌNH NGAY TẠI ĐÂY
+cls :: Làm sạch màn hình trước khi hiển thị thông tin script sắp chạy
 if "!SCRIPT_URL!"=="" (
     echo Error: Script definition not found.
     echo Returning to menu in 2 seconds...
