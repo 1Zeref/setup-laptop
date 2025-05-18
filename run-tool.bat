@@ -13,34 +13,68 @@ if %errorlevel% neq 0 (
 
 setlocal EnableDelayedExpansion
 
-:: List of 3 PowerShell scripts with customized display names
+:: List of PowerShell scripts with customized display names
 set "SCRIPTS[1]=https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/get-informations.ps1"
 set "NAMES[1]=Get System Information"
 set "SCRIPTS[2]=https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/config.ps1"
 set "NAMES[2]=Configure Windows"
-:: Display menu with custom names
+
+:MENU
+cls
 echo Available scripts:
 echo 1. !NAMES[1]!
 echo 2. !NAMES[2]!
-:: Get user selection
-set /p choice="Select a script to run (1-2): "
+echo 3. Exit
+echo.
 
-:: Validate input choice
-if "!SCRIPTS[%choice%]!"=="" (
-    echo Invalid choice! Exiting...
-    timeout /t 2 /nobreak > nul
+:: Get user selection
+set /p choice="Select a script to run (1-3): "
+
+:: Validate input choice and process selection
+if "!choice!"=="1" goto :RUNSCRIPT
+if "!choice!"=="2" goto :RUNSCRIPT
+if "!choice!"=="3" (
+    echo Exiting...
+    timeout /t 1 /nobreak > nul
     exit /b
+)
+
+echo Invalid choice! Please select a valid option.
+timeout /t 2 /nobreak > nul
+goto :MENU
+
+:RUNSCRIPT
+if "!SCRIPTS[%choice%]!"=="" (
+    echo Error: Script definition not found for choice %choice%.
+    timeout /t 2 /nobreak > nul
+    goto :MENU
 )
 
 :: Select the script file
 set "SCRIPT=!SCRIPTS[%choice%]!"
+set "SCRIPTNAME=!NAMES[%choice%]!"
 
+echo Running "!SCRIPTNAME!"...
 :: Run the selected PowerShell script with admin privileges
-:: Đoạn mã gốc của bạn đã chạy PowerShell với quyền admin thông qua việc tải và thực thi,
-:: nhưng việc đảm bảo bản thân batch script chạy với quyền admin từ đầu là một lớp bảo vệ tốt hơn.
-:: Lệnh PowerShell bên dưới để thực thi script vẫn giữ nguyên vì nó hiệu quả.
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
  "irm '!SCRIPT!' | iex"
 
-:: Automatically close the batch file after execution
-exit
+echo.
+echo Script "!SCRIPTNAME!" finished.
+echo What would you like to do next?
+echo 1. Run another script
+echo 2. Exit
+set /p next_action="Select an option (1-2): "
+
+if "!next_action!"=="1" goto :MENU
+if "!next_action!"=="2" (
+    echo Exiting...
+    timeout /t 1 /nobreak > nul
+    exit /b
+)
+
+echo Invalid option. Returning to menu.
+timeout /t 2 /nobreak > nul
+goto :MENU
+
+endlocal
