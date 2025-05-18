@@ -21,59 +21,68 @@ set "NAMES[2]=Configure Windows"
 
 :MENU
 cls
+echo =====================================
+echo      SCRIPT SELECTION MENU
+echo =====================================
+echo.
 echo Available scripts:
 echo 1. !NAMES[1]!
 echo 2. !NAMES[2]!
 echo 3. Exit
 echo.
+echo -------------------------------------
 
 :: Get user selection
-set /p choice="Select a script to run (1-3): "
+set /p choice="Select a script to run (1-3), or 3 to Exit: "
 
 :: Validate input choice and process selection
-if "!choice!"=="1" goto :RUNSCRIPT
-if "!choice!"=="2" goto :RUNSCRIPT
+if "!choice!"=="1" goto :RUNSCRIPT_1
+if "!choice!"=="2" goto :RUNSCRIPT_2
 if "!choice!"=="3" (
-    echo Exiting...
+    echo Exiting script...
     timeout /t 1 /nobreak > nul
     exit /b
 )
 
 echo Invalid choice! Please select a valid option.
+echo Returning to menu in 2 seconds...
 timeout /t 2 /nobreak > nul
 goto :MENU
 
-:RUNSCRIPT
-if "!SCRIPTS[%choice%]!"=="" (
-    echo Error: Script definition not found for choice %choice%.
+:RUNSCRIPT_1
+set "SCRIPT_URL=!SCRIPTS[1]!"
+set "SCRIPT_NAME=!NAMES[1]!"
+goto :EXECUTESCRIPT
+
+:RUNSCRIPT_2
+set "SCRIPT_URL=!SCRIPTS[2]!"
+set "SCRIPT_NAME=!NAMES[2]!"
+goto :EXECUTESCRIPT
+
+:EXECUTESCRIPT
+if "!SCRIPT_URL!"=="" (
+    echo Error: Script definition not found.
+    echo Returning to menu in 2 seconds...
     timeout /t 2 /nobreak > nul
     goto :MENU
 )
 
-:: Select the script file
-set "SCRIPT=!SCRIPTS[%choice%]!"
-set "SCRIPTNAME=!NAMES[%choice%]!"
+echo.
+echo =====================================
+echo Running: !SCRIPT_NAME!
+echo From URL: !SCRIPT_URL!
+echo =====================================
+echo.
 
-echo Running "!SCRIPTNAME!"...
 :: Run the selected PowerShell script with admin privileges
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
- "irm '!SCRIPT!' | iex"
+ "irm '!SCRIPT_URL!' | iex"
 
 echo.
-echo Script "!SCRIPTNAME!" finished.
-echo What would you like to do next?
-echo 1. Run another script
-echo 2. Exit
-set /p next_action="Select an option (1-2): "
-
-if "!next_action!"=="1" goto :MENU
-if "!next_action!"=="2" (
-    echo Exiting...
-    timeout /t 1 /nobreak > nul
-    exit /b
-)
-
-echo Invalid option. Returning to menu.
+echo =====================================
+echo Script "!SCRIPT_NAME!" finished.
+echo Returning to menu...
+echo =====================================
 timeout /t 2 /nobreak > nul
 goto :MENU
 
