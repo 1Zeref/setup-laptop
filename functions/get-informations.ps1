@@ -1,10 +1,9 @@
 Write-Host "=============================="
 Write-Host "Thông tin máy tính"
 Write-Host "=============================="
+Write-Host "Tên máy tính: $env:COMPUTERNAME"
 # Lấy thông tin BIOS để lấy Serial Number
 $bios = Get-WmiObject -Class Win32_BIOS
-
-# Hiển thị Serial Number
 Write-Host "Serial Number: $($bios.SerialNumber)"
 
 # Dừng lại, yêu cầu người dùng nhấn Enter để thoát
