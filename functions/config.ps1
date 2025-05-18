@@ -10,6 +10,7 @@ $ps1Links = @(
     "https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/config/update-time.ps1"
     "https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/config/power-and-sleep.ps1"
     "https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/config/desktop.ps1"
+    "https://raw.githubusercontent.com/1Zeref/setup-laptop/main/functions/config/UAC.ps1"
     # <-- Thêm link khác tại đây nếu có
 )
 
