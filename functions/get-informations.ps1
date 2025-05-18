@@ -6,8 +6,8 @@ Write-Host "Tên máy tính: $env:COMPUTERNAME"
 $bios = Get-WmiObject -Class Win32_BIOS
 Write-Host "Serial Number: $($bios.SerialNumber)"
 
+Write-Host "battery status: "
 $ReportPath = "$env:USERPROFILE\battery-report.html"
-Write-Host "$ReportPath"
 powercfg /batteryreport /output $ReportPath
 if (Test-Path $ReportPath) {
     Start-Process $ReportPath
