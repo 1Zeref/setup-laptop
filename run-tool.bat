@@ -69,6 +69,7 @@ set "SCRIPT_NAME=!NAMES[2]!"
 goto :EXECUTESCRIPT
 
 :EXECUTESCRIPT
+cls :: <--- LÀM SẠCH MÀN HÌNH NGAY TẠI ĐÂY
 if "!SCRIPT_URL!"=="" (
     echo Error: Script definition not found.
     echo Returning to menu in 2 seconds...
