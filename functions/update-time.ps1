@@ -7,12 +7,24 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 # Đặt múi giờ về UTC+7 (Bangkok, Hanoi, Jakarta)
 tzutil /s "SE Asia Standard Time"
-Write-Host "[+] Đã đặt múi giờ về UTC+7 (Bangkok, Hanoi, Jakarta)"
 
 # Cập nhật thời gian từ máy chủ Internet
-Write-Host "[+] Đang đồng bộ thời gian với máy chủ thời gian..."
 w32tm /resync | Out-Null
 
 # Đặt định dạng ngày ngắn (Short Date) thành dd/MM/yyyy
 Set-ItemProperty -Path "HKCU:\Control Panel\International" -Name "sShortDate" -Value "dd/MM/yyyy"
-Write-Host "Đã cập nhật định dạng ngày ngắn (Short Date) thành dd/MM/yyyy"
+
+# Khởi động lại dịch vụ thời gian Windows
+net stop w32time
+w32tm /unregister
+w32tm /register
+net start w32time
+
+# Đặt máy chủ thời gian chuẩn (ví dụ time.windows.com)
+w32tm /config /manualpeerlist:"time.windows.com" /syncfromflags:manual /reliable:yes /update
+
+# Thực hiện đồng bộ
+w32tm /resync
+
+# Đặt Region thành Việt Nam
+Set-WinSystemLocale vi-VN

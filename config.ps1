@@ -22,6 +22,8 @@ foreach ($link in $ps1Links) {
         Write-Host $_.Exception.Message
     }
 }
+# Khởi động lại Explorer
+Stop-Process -Name explorer -Force; Start-Sleep 2; Start-Process explorer
 
 Write-Host "`n[✓] Đã chạy xong tất cả các script." -ForegroundColor Green
 Read-Host "`nNhấn Enter để thoát"
