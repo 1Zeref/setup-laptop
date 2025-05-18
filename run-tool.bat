@@ -21,7 +21,9 @@ set "NAMES[2]=Configure Windows"
 set "SCRIPTS[3]=https://christitus.com/win"
 set "NAMES[3]=Chris Titus Tech's Windows Utility"
 set "SCRIPTS[4]=https://get.activated.win"
-set "NAMES[4]=Microsoft-Activation-Scripts"
+set "NAMES[4]=Microsoft Activation Scripts"
+set "SCRIPTS[5]=https://raw.githubusercontent.com/1Zeref/setup-laptop/functions/fix-share-printer.ps1"
+set "NAMES[5]=Fix Share Printer"
 
 :MENU
 cls
@@ -34,14 +36,15 @@ echo 1. !NAMES[1]!
 echo 2. !NAMES[2]!
 echo 3. !NAMES[3]!
 echo 4. !NAMES[4]!
-echo 5. Exit
+echo 5. !NAMES[5]!
+echo 6. Exit
 echo.
 echo (Press ENTER without typing to exit)
 echo -------------------------------------
 
 :: Nhận lựa chọn của người dùng
 set "choice="
-set /p choice="Select a script to run (1-5) or leave blank to Exit: "
+set /p choice="Select a script to run (1-6) or leave blank to Exit: "
 
 :: Kiểm tra nếu nhập rỗng (chỉ nhấn Enter)
 if "!choice!"=="" (
@@ -54,7 +57,8 @@ if "!choice!"=="1" goto :RUNSCRIPT_1
 if "!choice!"=="2" goto :RUNSCRIPT_2
 if "!choice!"=="3" goto :RUNSCRIPT_3
 if "!choice!"=="4" goto :RUNSCRIPT_4
-if "!choice!"=="5" (
+if "!choice!"=="5" goto :RUNSCRIPT_5
+if "!choice!"=="6" (
     echo Exiting script as per selection...
     exit /b
 )
@@ -80,6 +84,11 @@ goto :EXECUTESCRIPT
 :RUNSCRIPT_4
 set "SCRIPT_URL=!SCRIPTS[4]!"
 set "SCRIPT_NAME=!NAMES[4]!"
+goto :EXECUTESCRIPT
+
+:RUNSCRIPT_5
+set "SCRIPT_URL=!SCRIPTS[5]!"
+set "SCRIPT_NAME=!NAMES[5]!"
 goto :EXECUTESCRIPT
 
 :EXECUTESCRIPT
