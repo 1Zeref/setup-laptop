@@ -21,7 +21,7 @@ set "NAMES[2]=Configure Windows"
 :: Display menu with custom names
 echo Available scripts:
 echo 1. !NAMES[1]!
-
+echo 2. !NAMES[2]!
 :: Get user selection
 set /p choice="Select a script to run (1-2): "
 
