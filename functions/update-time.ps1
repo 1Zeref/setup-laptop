@@ -30,4 +30,3 @@ w32tm /resync
 Get-WinHomeLocation
 Set-WinHomeLocation -GeoID 248
 Get-WinHomeLocation
-
