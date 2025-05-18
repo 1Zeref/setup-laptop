@@ -21,7 +21,7 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 :: Tải và chạy script từ URL
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'raw.githubusercontent.com/%ps1url%' | powershell -NoProfile -ExecutionPolicy Bypass -"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubusercontent.com/%ps1url%' | powershell -NoProfile -ExecutionPolicy Bypass -"
 
 :: Dừng để xem kết quả
 pause
